@@ -27,9 +27,9 @@ REST API sederhana untuk manajemen inventory menggunakan Flask dan PostgreSQL.
 Clone repository:
 
 ```bash
-git clone https://github.com/USERNAME/inventory-system.git
+git clone https://github.com/Agung199/kasir_sederhana.git
 
-cd inventory-system
+cd kasir_sederhana
 ```
 
 Buat virtual environment:
