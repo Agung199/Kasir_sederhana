@@ -1,19 +1,24 @@
-from flask_sqlalchemy import SQLAlchemy
+
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from sqlalchemy import (
+    Column, Integer, String, Float, DateTime, ForeignKey
+)
+
+from sqlalchemy.orm import relationship
+from database import Base
 
 
-db = SQLAlchemy()
 
 
 # Models item
-class Item(db.Model):
+class Item(Base):
     __tablename__ = "items"
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    stock = db.Column(db.Integer, nullable=False, default=0)
-    price = db.Column(db.Float, nullable=False)
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(120), nullable=False)
+    stock = Column(Integer, default=0)
+    price = Column(Float, nullable=False)
 
     def to_dict(self):
         return {
@@ -25,16 +30,16 @@ class Item(db.Model):
 
 
 # Models User
-class User(db.Model):
+class User(Base):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
 
-    username = db.Column(db.String(50), unique=True, nullable=False)
+    username = Column(String(50), unique=True)
 
-    email = db.Column(db.String(255), unique=True, nullable=False)
+    email = Column(String(255), unique=True)
 
-    password_hash = db.Column(db.String(255), nullable=False)
+    password_hash = Column(String(255))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -44,19 +49,19 @@ class User(db.Model):
 
 
 # Models STock Movement
-class StockMovement(db.Model):
+class StockMovement(Base):
     __tablename__ = "stock_movements"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
 
-    item_id = db.Column(db.Integer, db.ForeignKey("items.id"), nullable=False)
+    item_id = Column(Integer, ForeignKey("items.id"), nullable=False)
 
-    movement_type = db.Column(db.String, nullable=False)
+    movement_type = Column(String)
 
-    quantity = db.Column(db.Integer, nullable=False)
+    quantity = Column(Integer)
 
-    notes = db.Column(db.String(255))
+    notes = Column(String(255))
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
-    item = db.relationship("Item")
+    item = relationship("Item")

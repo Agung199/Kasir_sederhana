@@ -1,6 +1,6 @@
 # Inventory Management API
 
-REST API sederhana untuk manajemen inventory menggunakan Flask dan PostgreSQL.
+REST API sederhana untuk manajemen inventory menggunakan FastApi dan PostgreSQL.
 
 ## Features
 
@@ -10,7 +10,8 @@ REST API sederhana untuk manajemen inventory menggunakan Flask dan PostgreSQL.
 * Stock Out
 * Stock Movement History
 * PostgreSQL Database
-* Swagger Documentation
+* Swagger Documentation (OpenApi)
+* Interactive Api Testing
 
 ## Technology Stack
 
@@ -18,7 +19,8 @@ REST API sederhana untuk manajemen inventory menggunakan Flask dan PostgreSQL.
 * Flask
 * SQLAlchemy
 * PostgreSQL
-* Flasgger (Swagger UI)
+* uvicorn
+* pydantic
 
 ---
 
@@ -67,6 +69,13 @@ Buat database PostgreSQL:
 ```sql
 CREATE DATABASE sistem_inventory;
 ```
+Buat user database:
+
+```sql
+CREATE USER inventory_user WITH PASSWORD 'password123';
+
+GRANT ALL PRIVILEGES ON DATABASE sistem_inventory TO inventory_user;
+```
 
 Buat file `.env`
 
@@ -78,24 +87,37 @@ DATABASE_URL=postgresql://inventory_user:password123@localhost:5432/sistem_inven
 
 ## Run Application
 
+Jalankan server:
+
 ```bash
-python app.py
+uvicorn main:app --reload
 ```
 
 Server akan berjalan pada:
 
 ```text
-http://127.0.0.1:5000
+http://127.0.0.1:8000
 ```
 
 ---
 
-## Swagger Documentation
+## API Documentation
 
-Buka:
+Swagger UI:
 
 ```text
-http://127.0.0.1:5000/apidocs
+http://127.0.0.1:8000/docs
+```
+ReDoc:
+
+```text
+http://127.0.0.1:8000/redoc
+```
+
+OpenAPI Schema:
+
+```text
+http://127.0.0.1:8000/openapi.json
 ```
 
 ---
@@ -120,6 +142,25 @@ http://127.0.0.1:5000/apidocs
 | POST   | /stock-out |
 | GET    | /movements |
 
+## Project Structure
+
+```text
+kasir_sederhana/
+│
+├── main.py
+├── database.py
+├── models.py
+├── schemas.py
+├── config.py
+│
+├── app.py (File Sebelum penggunaan tecnologi fastapi menggunakan flask)
+│
+├── .env
+├── 
+├── .gitignore
+├── requirements.txt
+└── README.md
+```
 ---
 
 ## Author

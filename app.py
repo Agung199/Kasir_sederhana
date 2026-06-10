@@ -2,12 +2,11 @@ from flask import Flask, request, jsonify
 from config import Config
 from models import db, Item, User, StockMovement
 from sqlalchemy import text
-from flasgger import Swagger
+from fastapi import FastAPI
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
-Swagger(app)
 
 db.init_app(app)
 
