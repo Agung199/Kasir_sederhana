@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from config import Config
 from models import db, Item, User, StockMovement
 from sqlalchemy import text
-from fastapi import FastAPI
+#from fastapi import FastAPI
 
 
 app = Flask(__name__)
